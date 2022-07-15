@@ -14,5 +14,7 @@ public interface UserMapper {
     @Mapping(source = "encryptedPassword", target = "password")
     User dtoToUser(UserDTO userDTO);
 
+    @Mapping(source = "password", target = "encryptedPassword")
     UserDTO userToDTO(User user);
+
 }
