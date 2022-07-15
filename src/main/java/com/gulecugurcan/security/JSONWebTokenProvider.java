@@ -1,6 +1,7 @@
 package com.gulecugurcan.security;
 
 import com.gulecugurcan.mapper.UserMapper;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -13,10 +14,8 @@ import javax.annotation.PostConstruct;
 import java.security.Key;
 
 @Service
-@RequiredArgsConstructor
 public class JSONWebTokenProvider {
 
-    private final UserMapper userMapper;
     private Key key;
 
     @PostConstruct
@@ -30,5 +29,17 @@ public class JSONWebTokenProvider {
                 .setSubject(principal.getUsername())
                 .signWith(key)
                 .compact();
+    }
+    public boolean validateToken(String token) {
+        Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+        return true;
+    }
+
+    public String getUsernameFromJSONWebToken(String jsonWebToken) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(key)
+                .parseClaimsJws(jsonWebToken)
+                .getBody();
+        return claims.getSubject();
     }
 }

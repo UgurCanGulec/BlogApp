@@ -3,7 +3,6 @@ package com.gulecugurcan.service;
 import com.gulecugurcan.dao.UserDAO;
 import com.gulecugurcan.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,15 +10,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Collections;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImp implements UserDetailsService {
 
-    @Autowired
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
