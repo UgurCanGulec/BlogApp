@@ -9,7 +9,10 @@ import com.gulecugurcan.exception.UserNotFoundException;
 import com.gulecugurcan.mapper.PostMapper;
 import com.gulecugurcan.repository.PostRepository;
 import com.gulecugurcan.repository.UserRepository;
+import com.gulecugurcan.util.request.PostSearchRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
@@ -55,5 +58,13 @@ public class PostDAO {
         post.setTitle(post.getTitle());
         post.setUpdatedBy(updateUser.getUsername());
         return postMapper.postToDTO(post);
+    }
+
+    public Page<PostDTO> findByCriteria(PostSearchRequest request, Pageable pageable) {
+        PostRepository.PostQuerySpecification querySpecification = new PostRepository.PostQuerySpecification();
+        querySpecification.setPostTitle(request.getPostTitle());
+        querySpecification.setUsername(request.getUsername());
+        Page<Post> result = postRepository.findAll(querySpecification, pageable);
+        return result.map(postMapper::postToDTO);
     }
 }

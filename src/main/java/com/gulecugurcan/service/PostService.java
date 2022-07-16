@@ -5,7 +5,11 @@ import com.gulecugurcan.dao.PostDAO;
 import com.gulecugurcan.dao.UserDAO;
 import com.gulecugurcan.dto.PostDTO;
 import com.gulecugurcan.dto.UserDTO;
+import com.gulecugurcan.exception.PostNotFoundException;
+import com.gulecugurcan.util.request.PostSearchRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +46,13 @@ public class PostService {
         User user = authService.getCurrentUser().orElseThrow(
                 () -> new IllegalArgumentException(ErrorMessageConstants.NO_USER_FOUND_LOGGED_ID));
         return postDAO.updatePost(postDTO, user);
+    }
+
+    public Page<PostDTO> getPostList(PostSearchRequest request, Pageable pageable) {
+        Page<PostDTO> result = postDAO.findByCriteria(request, pageable);
+        if (!result.hasContent()) {
+            throw new PostNotFoundException();
+        }
+        return result;
     }
 }

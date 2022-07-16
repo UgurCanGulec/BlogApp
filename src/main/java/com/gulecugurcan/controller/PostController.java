@@ -2,10 +2,13 @@ package com.gulecugurcan.controller;
 
 import com.gulecugurcan.dto.PostDTO;
 import com.gulecugurcan.service.PostService;
+import com.gulecugurcan.util.request.PostSearchRequest;
 import com.gulecugurcan.util.request.SaveOrUpdatePostRequest;
 import com.gulecugurcan.util.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +47,10 @@ public class PostController {
         return ResponseEntity.ok(new BaseResponse<>(postDTO));
     }
 
-
-
+    @GetMapping("/all")
+    @Operation(description = "get all posts by filter")
+    public ResponseEntity<BaseResponse<Page<PostDTO>>> getPosts(@ModelAttribute PostSearchRequest request, Pageable pageable) {
+        Page<PostDTO> dtoList = postService.getPostList(request, pageable);
+        return ResponseEntity.ok(new BaseResponse<>(dtoList));
+    }
 }
