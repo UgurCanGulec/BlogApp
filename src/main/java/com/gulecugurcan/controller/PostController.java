@@ -21,7 +21,7 @@ public class PostController {
 
     @PostMapping("/post")
     @Operation(description = "save new post")
-    public ResponseEntity<BaseResponse<PostDTO>> createPosts(SaveOrUpdatePostRequest request) {
+    public ResponseEntity<BaseResponse<PostDTO>> createPosts(@RequestBody SaveOrUpdatePostRequest request) {
         PostDTO postDTO = postService.createPost(request.getPostDTO());
         return ResponseEntity.ok(new BaseResponse<>(postDTO));
     }

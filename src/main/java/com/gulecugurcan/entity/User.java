@@ -1,15 +1,15 @@
 package com.gulecugurcan.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
+@Setter
+@Getter
+@NoArgsConstructor
 @Entity
-@Data
 @Table(name = "user")
-@EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

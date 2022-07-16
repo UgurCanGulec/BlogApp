@@ -1,12 +1,13 @@
 package com.gulecugurcan.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 @Table(name = "post")
 @EqualsAndHashCode(callSuper = true)
 public class Post extends BaseEntity {
