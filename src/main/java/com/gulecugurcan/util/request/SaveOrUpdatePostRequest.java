@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SavingPostRequest {
+public class SaveOrUpdatePostRequest {
     private PostDTO postDTO;
 }

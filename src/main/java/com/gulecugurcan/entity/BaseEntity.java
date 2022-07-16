@@ -1,8 +1,6 @@
 package com.gulecugurcan.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -30,4 +28,6 @@ public class BaseEntity implements Serializable {
 
     @LastModifiedDate
     private Timestamp updatedDate;
+
+    private Boolean deleteFlag = Boolean.FALSE;
 }

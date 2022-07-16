@@ -46,4 +46,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.error("Post could not inserted !");
         return new ResponseEntity<>(new BaseResponse<>(null, ErrorType.BAD_REQUEST.name(), body,false), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler({PostNotFoundException.class})
+    public ResponseEntity<Object> handlePostNotFoundException(PostInsertionFailException ex, WebRequest webRequest) {
+        Map<String ,Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDate.now());
+        body.put("message", "Gönderi bulunamadı !");
+        body.put("error message", ex.getMessage());
+        log.error("Post could not found !");
+        return new ResponseEntity<>(new BaseResponse<>(null, ErrorType.NOT_FOUND.name(), body,false), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({UserNotFoundException.class})
+    public ResponseEntity<Object> handleUserNotFoundException(PostInsertionFailException ex, WebRequest webRequest) {
+        Map<String ,Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDate.now());
+        body.put("message", "Kullanıcı bulunamadı !");
+        body.put("error message", ex.getMessage());
+        log.error("User could not found !");
+        return new ResponseEntity<>(new BaseResponse<>(null, ErrorType.NOT_FOUND.name(), body,false), HttpStatus.NOT_FOUND);
+    }
 }

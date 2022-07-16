@@ -22,7 +22,7 @@ public class UserDAO {
     }
 
     public UserDTO findUserByUsername(String username) {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username + " isimli kullanıcı bulunamadı !"));
+        User user = userRepository.findByUsernameAndDeleteFlagFalse(username).orElseThrow(() -> new UsernameNotFoundException(username + " isimli kullanıcı bulunamadı !"));
         return userMapper.userToDTO(user);
     }
 }
